@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 public class Sin_Cos extends AppCompatActivity implements View.OnClickListener {
     EditText etNum;
     TextView txtSin_Cos,txtResult;
@@ -43,16 +45,20 @@ public class Sin_Cos extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnEqu:
+                DecimalFormat df = new DecimalFormat("###.###");
                 if (!etNum.getText().toString().equals(""))
                 {
                     if (Check.sin_cos == true)
                     {
                         Check.result = Math.sin(Math.toRadians(Double.parseDouble(etNum.getText().toString())));
+
                     }
                     else
                     {
                         Check.result = Math.cos(Math.toRadians(Double.parseDouble(etNum.getText().toString())));
                     }
+                    Check.check_prev = true;
+                    Check.result = Double.parseDouble(df.format(Check.result));
                     txtResult.setText(Double.toString(Check.result));
                 }
                 else
@@ -69,6 +75,7 @@ public class Sin_Cos extends AppCompatActivity implements View.OnClickListener {
             case R.id.btnClear:
                 etNum.setText("");
                 txtResult.setText("");
+                Toast.makeText(this, ""+Check.result, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnBack:
                 Intent intent = new Intent(this,MainActivity.class);
